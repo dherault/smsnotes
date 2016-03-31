@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run offline",
     "offline": "sls offline start -p dev",
-    "offline_debug": "sls offline start -p dev --debug"
+    "offline_debug": "sls offline start -p dev --debugOffline"
   },
   "repository": {
     "type": "git",

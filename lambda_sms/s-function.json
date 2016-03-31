@@ -1,5 +1,5 @@
 {
-  "name": "lambda_graphql",
+  "name": "lambda_sms",
   "runtime": "babel",
   "description": "Serverless Lambda function for project: smsnotes",
   "customName": false,
@@ -9,36 +9,23 @@
   "memorySize": 1024,
   "authorizer": {},
   "custom": {
-    "excludePatterns": [],
-    "runtime": {
-      "babel": {
-        "presets": ["es2015", "stage-2"]
-      },
-      "minify": false
-    }
+    "excludePatterns": []
   },
   "endpoints": [
     {
-      "path": "lambda_graphql",
-      "method": "POST",
+      "path": "lambda_sms",
+      "method": "GET",
       "type": "AWS",
       "authorizationType": "none",
       "authorizerFunction": false,
       "apiKeyRequired": false,
       "requestParameters": {},
       "requestTemplates": {
-        "application/json": {
-          "payload": "$input.json('$')",
-          "sourceIp": "$context.identity.sourceIp"
-        }
+        "application/json": ""
       },
       "responses": {
         "400": {
-          "statusCode": "400",
-          "selectionPattern": ".*\"statusCode\":400.*",
-          "responseTemplates": {
-            "application/json": "$${errorMessageExtractionTemplate}"
-          }
+          "statusCode": "400"
         },
         "default": {
           "statusCode": "200",

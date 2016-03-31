@@ -1,0 +1,3 @@
+{
+  "errorMessageExtractionTemplate": "#set($inputRoot = $input.path('$'))$inputRoot.errorMessage"
+}
