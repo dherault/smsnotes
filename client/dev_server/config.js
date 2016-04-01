@@ -1,7 +1,7 @@
 'use strict';
 
 const config = {
-  port: 3000
+  port: 8080
 };
 
 config.url = `http://localhost:${config.port}/`;
