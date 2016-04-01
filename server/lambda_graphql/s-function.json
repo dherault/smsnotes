@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: smsnotes",
   "customName": false,
   "customRole": false,
-  "handler": "handler.default",
+  "handler": "lambda_graphql/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -14,12 +14,13 @@
       "babel": {
         "presets": ["es2015", "stage-2"]
       },
-      "minify": false
+      "minify": false,
+      "requires": ["../../../shared"]
     }
   },
   "endpoints": [
     {
-      "path": "lambda_graphql",
+      "path": "graphql",
       "method": "POST",
       "type": "AWS",
       "authorizationType": "none",

@@ -22,8 +22,7 @@ user: Today I saw a bird.
 
 user: meeting with Sarah at 6pm.
 
-user: #code #thisIsATag Shared state is the root of all evil.
-
+user: #code #thisIsATag Shared mutable state is the root of all evil.
 
 ### License
 

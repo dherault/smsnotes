@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: smsnotes",
   "customName": false,
   "customRole": false,
-  "handler": "handler.default",
+  "handler": "lambda_sms/handler.default",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -13,7 +13,7 @@
   },
   "endpoints": [
     {
-      "path": "lambda_sms",
+      "path": "sms",
       "method": "GET",
       "type": "AWS",
       "authorizationType": "none",

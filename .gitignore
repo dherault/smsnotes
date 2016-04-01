@@ -37,4 +37,8 @@ admin.env
 .env
 
 #Ignore _meta folder
-_meta
+#_meta
+
+# This project
+s-hooks/*.sample
+.jshintrc

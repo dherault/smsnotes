@@ -1,0 +1,6 @@
+{
+  "region": "eu-central-1",
+  "resourcesStackName": "smsnotes-dev-r",
+  "iamRoleArnLambda": "arn:aws:iam::864842660474:role/smsnotes-dev-r-IamRoleLambda-YACMVHJ4DUNO",
+  "apiGatewayApi": "smsnotes"
+}

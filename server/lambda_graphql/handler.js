@@ -1,5 +1,5 @@
 import 'babel-polyfill'; // node v0.10... What were they thinking?!!!
-import runGraphql from './runGraphql';
+import runGraphql from './lib/runGraphql';
 
 export default ({ payload, sourceIp }) => payload && typeof payload.query === 'string' ?
   runGraphql(payload.query, sourceIp) :
@@ -7,4 +7,3 @@ export default ({ payload, sourceIp }) => payload && typeof payload.query === 's
     statusCode: 400,
     message: "missing or invalid 'query' key in payload"
   }));
-  
