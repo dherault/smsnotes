@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { Router, RouterContext, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import routes from './routes';
 import configureStore from './state/configureStore';
@@ -20,3 +21,6 @@ render(
   document.getElementById('root'),
   () => console.log('App rendered!')
 );
+
+// http://www.material-ui.com/#/get-started/installation
+injectTapEventPlugin();

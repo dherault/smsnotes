@@ -17,6 +17,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
+app.get('/images/:x', (req, res) => res.sendFile(path.resolve(__dirname, '../dist/images/' + req.params.x)));
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../dist/index.html')));
 
 app.listen(port, '0.0.0.0', err => {

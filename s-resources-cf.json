@@ -45,7 +45,8 @@
               "Action": [
                 "dynamodb:GetItem",
                 "dynamodb:UpdateItem",
-                "dynamodb:PutItem"
+                "dynamodb:PutItem",
+                "dynamodb:Query"
               ],
               "Resource": "arn:aws:dynamodb:${region}:*:*"
             }
