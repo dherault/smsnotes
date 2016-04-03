@@ -2,8 +2,9 @@ import {
   // GraphQLEnumType,
   // GraphQLInterfaceType,
   GraphQLObjectType,
-  // GraphQLList,
-  // GraphQLInt,
+  GraphQLList,
+  GraphQLInt,
+  GraphQLFloat,
   GraphQLNonNull,
   GraphQLSchema,
   GraphQLString,
@@ -18,7 +19,8 @@ import {
   // GraphQLPassword
 // } from 'graphql-custom-types'; // https://github.com/stylesuxx/graphql-custom-types
 
-import readPhone from '../../shared/dynamodb/operations/readPhone';
+// import readPhone from '../../shared/dynamodb/operations/readPhone';
+import readMessages from '../../shared/dynamodb/operations/readMessages';
 
 import getProjection from './getProjection';
 
@@ -26,51 +28,57 @@ import getProjection from './getProjection';
 /* MODELS */
 /* -------*/
 
-// const userType = new GraphQLObjectType({
-//   name: 'User',
-//   description: 'A user.', // Inspired
-//   fields: {
+// const phoneType = new GraphQLObjectType({
+//   name: 'Phone',
+//   description: 'A phone.', // Inspired
+//   fields: () => ({
 //     id: {
 //       type: GraphQLString,
-//       description: 'The id of the user.',
+//       description: 'The id (phone number) of the phone.',
 //     },
-//     username: {
-//       type: GraphQLString,
-//       description: 'The username of the user.',
+//     messages: {
+//       type: new GraphQLList(messageType),
+//       description: 'The messages of the phone',
+//       args: { // Arguments are for pagination only
+//         before: {
+//           description: 'Pagination createdAt in ms.',
+//           type: GraphQLInt,
+//           defaultValue: Date.now(), // before now
+//         },
+//         count: {
+//           description: 'Pagination count.',
+//           type: GraphQLInt,
+//           defaultValue: 20, // last 20 messages by default
+//         }
+//       },
+//       resolve: (phone, args, context) => readMessages(phone.id, args, getProjection(context)),
 //     },
-//     telephoneNumber: {
-//       type: GraphQLString,
-//       description: 'The telephone number of the user.',
-//     },
-//     email: {
-//       type: GraphQLString,
-//       description: 'The email of the user.',
-//     },
-//     passwordDigest: { // For dev purposes only
-//       type: GraphQLString,
-//       description: 'The digested password of the user.',
-//     },
-//     isVerified: {
-//       type: GraphQLBoolean,
-//       description: "Indicates if the user's email has been verified.",
-//     },
-//     createdAt: { // For dev purposes only
-//       type: GraphQLInt,
-//       description: 'JavaScript date of creation.',
-//     },
-//     updatedAt: { // For dev purposes only
-//       type: GraphQLInt,
-//       description: 'JavaScript date of update.',
-//     },
-//   },
+//   }),
 // });
-const phoneType = new GraphQLObjectType({
-  name: 'Phone',
-  description: 'A phone.', // Inspired
+
+const messageType = new GraphQLObjectType({
+  name: 'Message',
+  description: 'A message (sms) and also a note.',
   fields: {
     id: {
       type: GraphQLString,
-      description: 'The id (phone number) of the phone.',
+      description: 'The id of the message.',
+    },
+    sender: {
+      type: GraphQLString,
+      description: 'The sender of the message.',
+    },
+    receiver: {
+      type: GraphQLString,
+      description: 'The receiver of the message.',
+    },
+    content: {
+      type: GraphQLString,
+      description: 'The content of the message.',
+    },
+    createdAt: {
+      type: GraphQLFloat ,
+      description: 'The timestamp of the message.',
     },
   },
 });
@@ -83,19 +91,50 @@ const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
     
-    // readPhone query example:
-    // { readPhone(number: \"33600000000\") { number, countryCode }  }
-    readPhone: {
-      description: 'Get phone by cell number.',
-      type: phoneType,
+    readMessages: {
+      description: 'Get messages from given phone number.',
+      type: new GraphQLList(messageType),
       args: {
-        id: {
-          description: 'cell number of the phone.',
+        sender: {
+          description: 'cell number for messages.',
           type: new GraphQLNonNull(GraphQLString)
+        },
+        before: {
+          description: 'Pagination createdAt in ms.',
+          type: GraphQLFloat,
+        },
+        limit: {
+          description: 'Pagination limit.',
+          type: GraphQLInt,
+          defaultValue: 20, // last 20 messages by default
         }
       },
-      resolve: (root, { id }, context) => readPhone(id, getProjection(context)),
+      resolve: (root, args, context) => readMessages(args, getProjection(context)),
     },
+    // readPhone query example:
+    // { readPhone(number: \"33600000000\") { number, countryCode }  }
+    // readPhone: {
+    //   description: 'Get phone by cell number.',
+    //   type: phoneType,
+    //   args: {
+    //     id: {
+    //       description: 'cell number of the phone.',
+    //       type: new GraphQLNonNull(GraphQLString)
+    //     }
+    //   },
+    //   resolve: (root, { id }, context) => readPhone(id, getProjection(context)),
+    // },
+    // readPhone: {
+    //   description: 'Get phone by cell number.',
+    //   type: phoneType,
+    //   args: {
+    //     id: {
+    //       description: 'cell number of the phone.',
+    //       type: new GraphQLNonNull(GraphQLString)
+    //     }
+    //   },
+    //   resolve: (root, { id }, context) => readPhone(id, getProjection(context)),
+    // },
     // readUserByEmailOrUsername query example:
     // { readUserByUsername(username: \"coco75\") { id, username } }
     // readUserByUsername: {

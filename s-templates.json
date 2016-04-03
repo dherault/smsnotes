@@ -6,5 +6,19 @@
       "application/json": "$${errorMessageExtractionTemplate}"
     }
   },
+  "409ResponseTemplate": {
+    "statusCode": "409",
+    "selectionPattern": ".*\"statusCode\":409.*",
+    "responseTemplates": {
+      "application/json": "$${errorMessageExtractionTemplate}"
+    }
+  },
+  "500ResponseTemplate": {
+    "statusCode": "500",
+    "selectionPattern": ".*\"statusCode\":500.*",
+    "responseTemplates": {
+      "application/json": "$${errorMessageExtractionTemplate}"
+    }
+  },
   "errorMessageExtractionTemplate": "$input.path('$.errorMessage')"
 }

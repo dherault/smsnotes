@@ -5,27 +5,38 @@
   Locally:      cmd --> this script --> serverless-offline
 */
 
+const argv = process.argv;
 const http = require('http');
 const querystring = require('querystring');
 
-const inputNumber = process.argv[2];
-const inputText = process.argv[3];
+if (argv[1].endsWith('sendOfflineSms.js')) sendOfflineSms(argv[2], argv[3]);
 
-// A Nexmo sms
-const sms = {
-  msisdn: inputNumber || '336' + Math.random().toString(10).substr(2, 8),
-  text: inputText || randomText(randomInteger(1, 150)),
-  type: 'text',
-  to: '33644631110',
-  keyword: 'keyword', 
-  messageId: Math.random().toString(10).slice(2),
-  'message-timestamp': new Date().toISOString().replace('T', ' ').split('.')[0],
-};
+function sendOfflineSms(inputNumber, inputText) {
+  
+  // A Nexmo sms
+  const sms = {
+    msisdn: inputNumber || '336' + Math.random().toString(10).substr(2, 8),
+    text: inputText || randomText(randomInteger(1, 100)),
+    type: 'text',
+    to: '33600000000',
+    keyword: 'keyword', 
+    messageId: Math.random().toString(10).slice(2),
+    'message-timestamp': new Date().toISOString().replace('T', ' ').split('.')[0],
+  };
+  
+  return new Promise((resolve, reject) => {
+    
+    // Calls serverless-offline
+    http.get('http://localhost:3000/dev/sms?' + querystring.stringify(sms), () => {
+      console.log(sms.msisdn, sms.text);
+      resolve(sms);
+    }).on('error', err => {
+      if (err.code === 'ECONNREFUSED') console.log('Local server not found :)');
+      reject(err);
+    });
+  });
+}
 
-// Calls serverless-offline
-http.get('http://localhost:3000/dev/sms?' + querystring.stringify(sms), () => {
-  console.log(sms.msisdn, sms.text);
-});
 
 function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -61,3 +72,5 @@ function randomText(n) {
   
   return text.slice(-2) === '. ' ? text.slice(0, -1) : text.slice(0, -1) + '.';
 }
+
+module.exports = sendOfflineSms;

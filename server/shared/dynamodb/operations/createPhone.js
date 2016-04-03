@@ -1,6 +1,7 @@
-import { logDb } from '../../logger';
+import ApigError from '../../ApigError';
+import { logDb, logError } from '../../logger';
 import { dbClient, tables } from '../main';
-import deserialize from '../helpers/deserialize';
+import deserialize from '../deserialize';
 
 export default function createPhone({ id }) {
   
@@ -29,8 +30,11 @@ export default function createPhone({ id }) {
     
     dbClient.putItem(phoneParams, (err, data) => {
       if (err) {
-        logDb('Error while creating phone', err.message);
-        return reject(err); // not an apigArror
+        logError('createPhone/putItem', err);
+        return reject(err.code === 'ConditionalCheckFailedException' ? 
+          new ApigError(409, 'Phone already exists') :
+          new ApigError() // 500
+        );
       }
       
       resolve(deserialize(phoneParams.Item));

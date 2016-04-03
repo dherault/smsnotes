@@ -1,6 +1,6 @@
-import { logDb } from '../../logger';
+import { logDb, logError } from '../../logger';
 import { dbClient, tables } from '../main';
-import deserialize from '../helpers/deserialize';
+import deserialize from '../deserialize';
 import ApigError from '../../ApigError';
 
 /* Read phone (by id) */
@@ -22,7 +22,10 @@ export default function readPhone(id, ProjectionExpression) {
     };
     
     dbClient.getItem(params, (err, data) => {
-      if (err) return reject(err);
+      if (err) {
+        logError('readPhone/getItem', err);
+        return reject(new ApigError());
+      }
       
       const phone = data.Item;
       

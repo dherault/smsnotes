@@ -3,12 +3,12 @@ import onServer from './onServer';
 const chalk = onServer ? require('chalk') : null;
 
 export const log = createLogger();
-// export const logWarning = createLogger({
-//   prefix: '!!!',
-//   chalk: 'bgRed',
-//   textClient: 'White',
-//   backgroundClient: 'Crimson',
-// });
+export const logWarning = createLogger({
+  prefix: '!!!',
+  chalk: 'bgRed',
+  textClient: 'White',
+  backgroundClient: 'Crimson',
+});
 // export const logStart = createLogger({
 //   prefix: '.:!',
 //   chalk: 'bgGreen',
@@ -62,7 +62,7 @@ export function createLogger(options={}) {
   };
 }
 
-// export function logError(message, error) {
-//   logWarning(message);
-//   console.error(error.stack || error);
-// }
+export function logError(message, error) {
+  logWarning(message);
+  console.log(error.stack || error);
+}

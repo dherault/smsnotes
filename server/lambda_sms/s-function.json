@@ -22,11 +22,12 @@
       "requestParameters": {},
       "requestTemplates": {
         "application/json": {
+          "sourceIp": "$context.identity.sourceIp",
           "querystring": "$input.params().querystring",
           "message": {
             "id": "$input.params('messageId')",
-            "from": "$input.params('msisdn')",
-            "to": "$input.params('to')",
+            "sender": "$input.params('msisdn')",
+            "receiver": "$input.params('to')",
             "content": "$input.params('text')",
             "timestamp": "$input.params('message-timestamp')",
             "type": "$input.params('type')"
@@ -35,6 +36,8 @@
       },
       "responses": {
         "400": "$${400ResponseTemplate}",
+        "409": "$${409ResponseTemplate}",
+        "500": "$${500ResponseTemplate}",
         "default": {
           "statusCode": "200",
           "responseParameters": {},

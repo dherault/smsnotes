@@ -12,44 +12,52 @@ const config = {
     return {
       
       /* PHONES */
-      phones: {
-        TableName: createName('phones'),
-        AttributeDefinitions: [
-          {
-            AttributeName: 'id',
-            AttributeType: 'S',
-          }
-        ],
-        KeySchema: [
-          {
-            AttributeName: 'id', // The phone number (ex: 33600000000)
-            KeyType: 'HASH'
-          }
-        ],
-        ProvisionedThroughput: {
-          ReadCapacityUnits: 1, // !
-          WriteCapacityUnits: 1 // !
-        },
-      },
+      // phones: {
+      //   TableName: createName('phones'),
+      //   AttributeDefinitions: [
+      //     {
+      //       AttributeName: 'id',
+      //       AttributeType: 'S',
+      //     }
+      //   ],
+      //   KeySchema: [
+      //     {
+      //       AttributeName: 'id', // The phone number (ex: 33600000000)
+      //       KeyType: 'HASH'
+      //     }
+      //   ],
+      //   ProvisionedThroughput: {
+      //     ReadCapacityUnits: 10, // !
+      //     WriteCapacityUnits: 10 // !
+      //   },
+      // },
       
       /* MESSAGES */
       messages: {
         TableName: createName('messages'),
         AttributeDefinitions: [
           {
-            AttributeName: 'id',
+            AttributeName: 'sender', 
             AttributeType: 'S',
+          },
+          {
+            AttributeName: 'createdAt', 
+            AttributeType: 'N',
           }
         ],
         KeySchema: [
           {
-            AttributeName: 'id', // The id provided by Nexmo
+            AttributeName: 'sender', // Our primary index is the phone number that sent the message
             KeyType: 'HASH'
+          },
+          {
+            AttributeName: 'createdAt', // It's actually a composite key
+            KeyType: 'RANGE'
           }
         ],
         ProvisionedThroughput: {
-          ReadCapacityUnits: 1, // !
-          WriteCapacityUnits: 1 // !
+          ReadCapacityUnits: 10, // !
+          WriteCapacityUnits: 10 // !
         },
       },
       

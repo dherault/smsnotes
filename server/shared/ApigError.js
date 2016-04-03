@@ -1,14 +1,16 @@
 export default class ApigError {
   
-  constructor(statusCode, message) {
+  constructor(statusCode, originalMessage) {
     this.statusCode = statusCode || 500;
-    this.message = message || 'Internal server error.';
+    this.originalMessage = originalMessage || 'Internal server error.';
+    
+    this.message = JSON.stringify({
+      statusCode: this.statusCode,
+      message: this.originalMessage
+    });
   }
   
   toString() {
-    return JSON.stringify({ 
-      statusCode: this.statusCode,
-      message: this.message,
-    });
+    return this.message;
   }
 }

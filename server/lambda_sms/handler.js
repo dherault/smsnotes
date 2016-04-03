@@ -1,22 +1,28 @@
 import 'babel-polyfill'; // node v0.10... What were they thinking?!!!
-import processMessage from './lib/processMessage';
 import onLambda from '../shared/onLambda';
-// import ApigError from '../shared/ApigError';
+import processMessage from './lib/processMessage';
 
 export default (event, context) => {
   
   if (onLambda) {
     console.log('___NEW MESSAGE___');
+    console.log(event.sourceIp);
     console.log(event.querystring);
   }
   
-  // Parsig URL queries can result in number types (on 'to', 'from' and 'content' keys). 
+  // todo: restric ips (aws-configured)
+  // 174.37.245.32/29
+  // 174.36.197.192/28
+  // 173.193.199.16/28
+  // 119.81.44.0/28
+  
+  // Parsig URL queries can result in number types (on 'receiver', 'phoneId' and 'content' keys). 
   // We want strings.
   const message = {};
   for (let key in event.message) {
     message[key] = event.message[key].toString();
   }
   
-  return processMessage(message).catch(err => err.toString());
+  return processMessage(message);
 };
 

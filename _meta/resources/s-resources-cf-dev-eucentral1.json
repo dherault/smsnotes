@@ -39,6 +39,15 @@
                 "logs:PutLogEvents"
               ],
               "Resource": "arn:aws:logs:eu-central-1:*:*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:GetItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:PutItem"
+              ],
+              "Resource": "arn:aws:dynamodb:eu-central-1:*:*"
             }
           ]
         },

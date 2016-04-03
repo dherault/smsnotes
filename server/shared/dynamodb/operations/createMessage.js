@@ -1,33 +1,35 @@
-import { logDb } from '../../logger';
+import ApigError from '../../ApigError';
+import { logDb, logError } from '../../logger';
 import { dbClient, tables } from '../main';
-import deserialize from '../helpers/deserialize';
+import deserialize from '../deserialize';
 
-export default function createMessage({ id, from, to, content }) {
+export default function createMessage({ id, sender, receiver, content, timestamp }) {
   
   logDb('createMessage', id);
   
   return new Promise((resolve, reject) => {
     
-    if (typeof id !== 'string') return reject(new Error('Invalid id'));
-    
-    const nowString = new Date().getTime().toString(10);
+    const nowString = Date.now().toString(10);
     const phoneParams = {
       TableName: tables.messages.TableName,
       Item: {
         id: {
           S: id
         },
-        from: {
-          S: from
+        sender: { // Primary index
+          S: sender
         },
-        to: {
-          S: to
+        receiver: {
+          S: receiver
         },
         content: {
           S: content
         },
+        timestamp: {
+          S: timestamp
+        },
         createdAt: {
-          N: nowString // Yes, number type is a string.
+          N: nowString
         },
         updatedAt: {
           N: nowString
@@ -38,8 +40,11 @@ export default function createMessage({ id, from, to, content }) {
     
     dbClient.putItem(phoneParams, (err, data) => {
       if (err) {
-        logDb('Error while creating phone', err.message);
-        return reject(err); // not an apigArror
+        logError('createMessage/putItem', err);
+        return reject(err.code === 'ConditionalCheckFailedException' ? 
+          new ApigError(409, 'Message already exists') :
+          new ApigError() // 500
+        );
       }
       
       resolve(deserialize(phoneParams.Item));

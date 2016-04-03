@@ -34,6 +34,8 @@
       },
       "responses": {
         "400": "$${400ResponseTemplate}",
+        "409": "$${409ResponseTemplate}",
+        "500": "$${500ResponseTemplate}",
         "default": {
           "statusCode": "200",
           "responseParameters": {},
