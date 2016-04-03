@@ -3,11 +3,11 @@ import {
   // GraphQLInterfaceType,
   GraphQLObjectType,
   // GraphQLList,
-  GraphQLInt,
+  // GraphQLInt,
   GraphQLNonNull,
   GraphQLSchema,
   GraphQLString,
-  GraphQLBoolean
+  // GraphQLBoolean
 } from 'graphql/type';
 
 // import {
@@ -18,53 +18,59 @@ import {
   // GraphQLPassword
 // } from 'graphql-custom-types'; // https://github.com/stylesuxx/graphql-custom-types
 
-// import {
-//   createUser,
-//   readUser,
-//   readUserByEmailOrUsername,
-// } from '../dynamodb';
+import readPhone from '../../shared/dynamodb/operations/readPhone';
 
-// import getProjection from './getProjection';
+import getProjection from './getProjection';
 
 /* -------*/
 /* MODELS */
 /* -------*/
 
-const userType = new GraphQLObjectType({
-  name: 'User',
-  description: 'A user.', // Inspired
+// const userType = new GraphQLObjectType({
+//   name: 'User',
+//   description: 'A user.', // Inspired
+//   fields: {
+//     id: {
+//       type: GraphQLString,
+//       description: 'The id of the user.',
+//     },
+//     username: {
+//       type: GraphQLString,
+//       description: 'The username of the user.',
+//     },
+//     telephoneNumber: {
+//       type: GraphQLString,
+//       description: 'The telephone number of the user.',
+//     },
+//     email: {
+//       type: GraphQLString,
+//       description: 'The email of the user.',
+//     },
+//     passwordDigest: { // For dev purposes only
+//       type: GraphQLString,
+//       description: 'The digested password of the user.',
+//     },
+//     isVerified: {
+//       type: GraphQLBoolean,
+//       description: "Indicates if the user's email has been verified.",
+//     },
+//     createdAt: { // For dev purposes only
+//       type: GraphQLInt,
+//       description: 'JavaScript date of creation.',
+//     },
+//     updatedAt: { // For dev purposes only
+//       type: GraphQLInt,
+//       description: 'JavaScript date of update.',
+//     },
+//   },
+// });
+const phoneType = new GraphQLObjectType({
+  name: 'Phone',
+  description: 'A phone.', // Inspired
   fields: {
     id: {
       type: GraphQLString,
-      description: 'The id of the user.',
-    },
-    username: {
-      type: GraphQLString,
-      description: 'The username of the user.',
-    },
-    telephoneNumber: {
-      type: GraphQLString,
-      description: 'The telephone number of the user.',
-    },
-    email: {
-      type: GraphQLString,
-      description: 'The email of the user.',
-    },
-    passwordDigest: { // For dev purposes only
-      type: GraphQLString,
-      description: 'The digested password of the user.',
-    },
-    isVerified: {
-      type: GraphQLBoolean,
-      description: "Indicates if the user's email has been verified.",
-    },
-    createdAt: { // For dev purposes only
-      type: GraphQLInt,
-      description: 'JavaScript date of creation.',
-    },
-    updatedAt: { // For dev purposes only
-      type: GraphQLInt,
-      description: 'JavaScript date of update.',
+      description: 'The id (phone number) of the phone.',
     },
   },
 });
@@ -77,36 +83,36 @@ const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
     
-    // readUser query example:
-    // { readUser(id: \"100\") { id, email, username, passwordHash }  }
-    // readUser: {
-    //   description: 'Get user by id.',
-    //   type: userType,
-    //   args: {
-    //     id: {
-    //       description: 'id of the user.',
-    //       type: new GraphQLNonNull(GraphQLString)
-    //     }
-    //   },
-    //   resolve: (root, { id }, context) => readUser(id, getProjection(context)),
-    // },
-    // readUserByEmailOrUsername query example:
-    // { readUserByUsername(username: \"coco75\") { id, username } }
-    readUserByUsername: {
-      description: 'Get user by username.',
-      type: userType,
+    // readPhone query example:
+    // { readPhone(number: \"33600000000\") { number, countryCode }  }
+    readPhone: {
+      description: 'Get phone by cell number.',
+      type: phoneType,
       args: {
-        username: {
-          description: 'email or username of the user.',
+        id: {
+          description: 'cell number of the phone.',
           type: new GraphQLNonNull(GraphQLString)
         }
       },
-      // resolve: (root, { emailOrUsername }, context) => readUserByEmailOrUsername(emailOrUsername, getProjection(context)),
-      resolve: (root, { username }, context) => ({
-        username,
-        id: username + '_id',
-      }),
+      resolve: (root, { id }, context) => readPhone(id, getProjection(context)),
     },
+    // readUserByEmailOrUsername query example:
+    // { readUserByUsername(username: \"coco75\") { id, username } }
+    // readUserByUsername: {
+    //   description: 'Get user by username.',
+    //   type: userType,
+    //   args: {
+    //     username: {
+    //       description: 'email or username of the user.',
+    //       type: new GraphQLNonNull(GraphQLString)
+    //     }
+    //   },
+    //   // resolve: (root, { emailOrUsername }, context) => readUserByEmailOrUsername(emailOrUsername, getProjection(context)),
+    //   resolve: (root, { username }, context) => ({
+    //     username,
+    //     id: username + '_id',
+    //   }),
+    // },
   }
 });
 

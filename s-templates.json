@@ -1,3 +1,10 @@
 {
-  "errorMessageExtractionTemplate": "#set($inputRoot = $input.path('$'))$inputRoot.errorMessage"
+  "400ResponseTemplate": {
+    "statusCode": "400",
+    "selectionPattern": ".*\"statusCode\":400.*",
+    "responseTemplates": {
+      "application/json": "$${errorMessageExtractionTemplate}"
+    }
+  },
+  "errorMessageExtractionTemplate": "$input.path('$.errorMessage')"
 }

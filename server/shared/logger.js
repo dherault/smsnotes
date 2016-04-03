@@ -3,44 +3,44 @@ import onServer from './onServer';
 const chalk = onServer ? require('chalk') : null;
 
 export const log = createLogger();
-export const logWarning = createLogger({
-  prefix: '!!!',
-  chalk: 'bgRed',
-  textClient: 'White',
-  backgroundClient: 'Crimson',
-});
-export const logStart = createLogger({
-  prefix: '.:!',
-  chalk: 'bgGreen',
-  textClient: 'White',
-  backgroundClient: 'Chartreuse',
-});
+// export const logWarning = createLogger({
+//   prefix: '!!!',
+//   chalk: 'bgRed',
+//   textClient: 'White',
+//   backgroundClient: 'Crimson',
+// });
+// export const logStart = createLogger({
+//   prefix: '.:!',
+//   chalk: 'bgGreen',
+//   textClient: 'White',
+//   backgroundClient: 'Chartreuse',
+// });
 export const logFetch = createLogger({
   prefix: '+++',
   chalk: 'bgMagenta',
   textClient: 'White',
   backgroundClient: 'LightPink',
 });
-export const logApi = createLogger({
-  prefix: 'API',
+export const logDb = createLogger({
+  prefix: 'DB_',
   chalk: 'bgYellow',
 });
 export const logSms = createLogger({
   prefix: 'SMS',
   chalk: 'bgBlue',
 });
-export const logWebsocket = createLogger({
-  prefix: '_w_',
-  chalk: 'bgBlack',
-  textClient: 'White',
-  backgroundClient: 'DarkSlateGray',
-});
-export const logReducer = createLogger({
-  prefix: '.R.',
-  chalk: 'bgCyan',
-  textClient: 'White',
-  backgroundClient: 'SkyBlue',
-});
+// export const logWebsocket = createLogger({
+//   prefix: '_w_',
+//   chalk: 'bgBlack',
+//   textClient: 'White',
+//   backgroundClient: 'DarkSlateGray',
+// });
+// export const logReducer = createLogger({
+//   prefix: '.R.',
+//   chalk: 'bgCyan',
+//   textClient: 'White',
+//   backgroundClient: 'SkyBlue',
+// });
 
 export function createLogger(options={}) {
   
@@ -62,7 +62,7 @@ export function createLogger(options={}) {
   };
 }
 
-export function logError(message, error) {
-  logWarning(message);
-  console.error(error.stack || error);
-}
+// export function logError(message, error) {
+//   logWarning(message);
+//   console.error(error.stack || error);
+// }

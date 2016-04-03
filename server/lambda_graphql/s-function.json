@@ -14,8 +14,7 @@
       "babel": {
         "presets": ["es2015", "stage-2"]
       },
-      "minify": false,
-      "requires": ["../../../shared"]
+      "minify": false
     }
   },
   "endpoints": [
@@ -34,13 +33,7 @@
         }
       },
       "responses": {
-        "400": {
-          "statusCode": "400",
-          "selectionPattern": ".*\"statusCode\":400.*",
-          "responseTemplates": {
-            "application/json": "$${errorMessageExtractionTemplate}"
-          }
-        },
+        "400": "$${400ResponseTemplate}",
         "default": {
           "statusCode": "200",
           "responseParameters": {},

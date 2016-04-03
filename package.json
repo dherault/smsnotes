@@ -8,12 +8,20 @@
     "offline": "sls offline start -p dev",
     "offline_debug": "sls offline start -p dev --debugOffline",
     "dev": "cd client && node dev_server/dev_server.js",
-    "build": "npm run build:clean && npm run build:js",
+    "build": "npm run build:clean && npm run build:js && npm run build:size",
     "build:clean": "rm -f client/build/bundle.js",
-    "build:js": "webpack --config dev_server/webpack.config.prod.js --progress",
+    "build:js": "cd client && webpack --config dev_server/webpack.config.prod.js --progress",
+    "build:size": "du -h client/dist/bundle.js",
+    "build:test": "cd client/dist && python -m SimpleHTTPServer 8080",
+    "deploy_client": "aws s3 cp --recursive client/dist/ s3://smsnotes.com/ --acl public-read",
     "install_all": "npm i && cd server && npm i && cd ../client && npm i",
     "check_all": "ncu && cd server && ncu && cd ../client && ncu",
-    "update_all": "ncu -a && cd server && ncu -a && cd ../client && ncu -a"
+    "update_all": "ncu -a && cd server && ncu -a && cd ../client && ncu -a",
+    "sms": "node scripts/emulateOfflineSms.js",
+    "db:createTables": "babel-node scripts/dynamodb/createTables.js",
+    "db:deleteTables": "babel-node scripts/dynamodb/deleteTables.js",
+    "db:listTables": "babel-node scripts/dynamodb/listTables.js",
+    "db:resetTables": "npm run db:deleteTables && npm run db:createTables && npm run db:listTables"
   },
   "repository": {
     "type": "git",
