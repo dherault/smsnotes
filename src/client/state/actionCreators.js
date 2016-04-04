@@ -2,6 +2,16 @@
 import config from '../config';
 import { logAction, logFetch } from '../../shared/logger';
 
+export const setSender = params => ({
+  params,
+  type: 'SET_SENDER',
+});
+
+export const addMessage = params => ({
+  params,
+  type: 'ADD_MESSAGE',
+});
+
 export const readMessages = createActionCreator('readMessages', ({ sender, before, limit }) => {
   
   if (!sender) throw new Error(`readMessages missing 'sender' param`);
@@ -16,7 +26,6 @@ export const readMessages = createActionCreator('readMessages', ({ sender, befor
 function createActionCreator(intention, getQuery) {
   
   return params => {
-    
     
     const query = getQuery(params);
     const options = { 

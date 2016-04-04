@@ -35,8 +35,7 @@
             "sender": "$input.params('msisdn')",
             "receiver": "$input.params('to')",
             "content": "$input.params('text')",
-            "timestamp": "$input.params('message-timestamp')",
-            "type": "$input.params('type')"
+            "timestamp": "$input.params('message-timestamp')"
           }
         }
       },

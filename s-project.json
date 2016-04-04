@@ -1,5 +1,5 @@
 {
   "name": "smsnotes",
   "custom": {},
-  "plugins": ["serverless-offline", "serverless-runtime-babel"]
+  "plugins": ["serverless-offline", "serverless-runtime-babel", "serverless-cors-plugin"]
 }

@@ -2,15 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Note from './NotesPage/Note';
-import { readMessages } from '../state/actionCreators';
+import { readMessages, setSender } from '../state/actionCreators';
 
 class NotesPage extends React.Component {
   
   componentDidMount() {
     console.log('NotesPage mount!');
-    this.props.dispatch(readMessages({
-      sender: this.props.routeParams.sender
-    }));
+    const dispatch = this.props.dispatch;
+    const sender = this.props.routeParams.sender;
+    
+    dispatch(readMessages({ sender }));
+    dispatch(setSender({ sender }));
   }
 
   render() {

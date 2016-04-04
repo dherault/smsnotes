@@ -9,6 +9,9 @@ export default {
           ...state, 
           ...action.payload.map(x => Object.assign({ sender }, x))
         ].sort((a, b) => a.createdAt <= b.createdAt ? 1 : -1);
+        
+      case 'ADD_MESSAGE':
+        return [...state, action.params].sort((a, b) => a.createdAt <= b.createdAt ? 1 : -1);
       
       default:
         return state;
