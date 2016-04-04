@@ -1,0 +1,18 @@
+{
+  "name": "smsnotes-sources",
+  "version": "0.0.1",
+  "description": "sources for smsnotes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dherault/smsnotes.git"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3"
+  }
+}

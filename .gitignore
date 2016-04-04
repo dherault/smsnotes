@@ -42,4 +42,5 @@ admin.env
 # This project
 s-hooks/*.sample
 .jshintrc
-client/dist/bundle.js
+www/bundle.*
+_misc

@@ -1,0 +1,17 @@
+.lp_header {
+  margin: auto;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.lp_header_lead {
+  font-size: 1.2rem;
+}
+
+.lp_form {
+  text-align: center;
+  margin: 3rem auto 0 auto;
+}
