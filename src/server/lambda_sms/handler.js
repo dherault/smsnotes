@@ -15,6 +15,7 @@ export default (event, context) => {
   // 174.36.197.192/28
   // 173.193.199.16/28
   // 119.81.44.0/28
+  // + mine :)
   
   // Parsig URL queries can result in number types (on 'receiver', 'phoneId' and 'content' keys). 
   // We want strings.
@@ -22,6 +23,9 @@ export default (event, context) => {
   for (let key in event.message) {
     message[key] = event.message[key].toString();
   }
+  
+  // Serverless-offline bug #26
+  if (!onLambda && typeof message.content === 'string') message.content = message.content.replace(/\\n/g, '\n');
   
   return processMessage(message);
 };

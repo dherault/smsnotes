@@ -1,3 +1,4 @@
 'use strict';
 
-require('./sendOfflineSms')(process.argv[2], '😛💩💪🎓🐵🙈🙉🙊🐒');
+// lol not unicode type
+require('./sendOfflineSms')(process.argv[2], '😛💩💪🎓🐵🙈🙉🙊🐒', 'unicode');

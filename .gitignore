@@ -44,3 +44,4 @@ s-hooks/*.sample
 .jshintrc
 www/bundle.*
 _misc
+pusherConfig.js

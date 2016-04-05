@@ -1,18 +1,18 @@
 /* global fetch */
 import config from '../config';
+import isPlainObject from 'lodash.isplainobject';
 import { logAction, logFetch } from '../../shared/logger';
 
-export const setSender = params => ({
-  params,
-  type: 'SET_SENDER',
-});
+// An action creator takes a plain object as input (params) 
+// and outputs a redux-style action ({ params, type[s], [promise] });
 
-export const addMessage = params => ({
-  params,
-  type: 'ADD_MESSAGE',
-});
+/* Sync Action Creators */
+export const setSender = createSyncActionCreator('setSender');
 
-export const readMessages = createActionCreator('readMessages', ({ sender, before, limit }) => {
+export const addMessage = createSyncActionCreator('addMessage');
+
+/* Async Action Creators */
+export const readMessages = createGraphqlActionCreator('readMessages', ({ sender, before, limit }) => {
   
   if (!sender) throw new Error(`readMessages missing 'sender' param`);
   
@@ -22,10 +22,16 @@ export const readMessages = createActionCreator('readMessages', ({ sender, befor
     '){createdAt,content}}';
 });
 
+/* Utilities */
+
 // Creates async actionCreators that calls the GraphQL endpoint
-function createActionCreator(intention, getQuery) {
+function createGraphqlActionCreator(intention, getQuery) {
+  const types = ['REQUEST', 'SUCCESS', 'FAILURE'].map(createTypeFromIntention.bind(null, intention));
   
   return params => {
+    
+    logAction(intention, params);
+    validateParams(params);
     
     const query = getQuery(params);
     const options = { 
@@ -36,13 +42,11 @@ function createActionCreator(intention, getQuery) {
       },
     };
     
-    logAction(intention, params);
     logFetch('-→', query);
     
     return {
+      types,
       params,
-      intention,
-      types: ['REQUEST', 'SUCCESS', 'FAILURE'].map(t => `${t}_${intention.replace(/[A-Z]/g, '_$&')}`.toUpperCase()),
       promise: fetch(config.graphqlEndpointUrl, options).then(response => {
         if (response.status >= 200 && response.status < 300) return response.json();
         else throw response;
@@ -52,4 +56,26 @@ function createActionCreator(intention, getQuery) {
       })
     };
   };
+}
+
+// Reduces boilerplate, ensures logging and validates params
+function createSyncActionCreator(intention) {
+  const type = createTypeFromIntention(intention);
+  
+  return params => {
+    logAction(intention, params);
+    validateParams(params);
+    
+    return { type, params };
+  };
+}
+
+// doSomeStuff --> DO_SOME_STUFF
+// An action has one intention (camel-cased), but can have multiple types (caps, _-separated)
+function createTypeFromIntention(intention, prefix) {
+  return `${prefix ? prefix + '_' :  ''}${intention.replace(/[A-Z]/g, '_$&')}`.toUpperCase();
+}
+
+function validateParams(params) {
+  if (!isPlainObject(params)) throw new Error('In action: params must be a plain object!');
 }

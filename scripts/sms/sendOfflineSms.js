@@ -11,13 +11,13 @@ const querystring = require('querystring');
 
 if (argv[1].endsWith('sendOfflineSms.js')) sendOfflineSms(argv[2], argv[3]);
 
-function sendOfflineSms(inputNumber, inputText) {
+function sendOfflineSms(inputNumber, inputText, inputType) {
   
   // A Nexmo sms
   const sms = {
     msisdn: inputNumber || '336' + Math.random().toString(10).substr(2, 8),
     text: inputText || randomText(randomInteger(1, 100)),
-    type: 'text',
+    type: inputType || 'text',
     to: '33600000000',
     keyword: 'keyword', 
     messageId: Math.random().toString(10).slice(2),

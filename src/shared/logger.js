@@ -29,12 +29,12 @@ export const logSms = createLogger({
   prefix: 'SMS',
   chalk: 'bgBlue',
 });
-// export const logWebsocket = createLogger({
-//   prefix: '_w_',
-//   chalk: 'bgBlack',
-//   textClient: 'White',
-//   backgroundClient: 'DarkSlateGray',
-// });
+export const logWebsocket = createLogger({
+  prefix: '_w_',
+  chalk: 'bgBlack',
+  textClient: 'White',
+  backgroundClient: 'DarkSlateGray',
+});
 export const logReducer = createLogger({
   prefix: '.R.',
   chalk: 'bgCyan',
@@ -46,6 +46,12 @@ export const logAction = createLogger({
   chalk: 'bgGreen',
   textClient: 'White',
   backgroundClient: 'YellowGreen',
+});
+export const logSideEffect = createLogger({
+  prefix: '.E.',
+  // chalk: 'bgGreen',
+  textClient: 'White',
+  backgroundClient: 'Gold',
 });
 
 export function logError(message, error) {

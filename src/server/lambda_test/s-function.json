@@ -1,25 +1,19 @@
 {
-  "name": "lambda_sms",
-  "runtime": "babel",
+  "name": "lambda_test",
+  "runtime": "nodejs",
   "description": "Serverless Lambda function for project: smsnotes",
   "customName": false,
   "customRole": false,
-  "handler": "server/lambda_sms/handler.default",
+  "handler": "handler.handler",
   "timeout": 6,
   "memorySize": 128,
   "authorizer": {},
   "custom": {
-    "excludePatterns": [],
-    "runtime": {
-      "babel": {
-        "presets": ["es2015", "stage-2"]
-      },
-      "minify": true
-    }
+    "excludePatterns": []
   },
   "endpoints": [
     {
-      "path": "sms",
+      "path": "test",
       "method": "GET",
       "type": "AWS",
       "authorizationType": "none",
@@ -28,21 +22,14 @@
       "requestParameters": {},
       "requestTemplates": {
         "application/json": {
-          "sourceIp": "$context.identity.sourceIp",
-          "querystring": "$util.escapeJavaScript($input.params().querystring)",
-          "message": {
-            "id": "$input.params('messageId')",
-            "sender": "$input.params('msisdn')",
-            "receiver": "$input.params('to')",
-            "content": "$util.escapeJavaScript($input.params('text'))",
-            "timestamp": "$input.params('message-timestamp')"
-          }
+          "1": "$util.escapeJavaScript('foo')",
+          "2": "$util.escapeJavaScript($input.params('key'))"
         }
       },
       "responses": {
-        "400": "$${400ResponseTemplate}",
-        "409": "$${409ResponseTemplate}",
-        "500": "$${500ResponseTemplate}",
+        "400": {
+          "statusCode": "400"
+        },
         "default": {
           "statusCode": "200",
           "responseParameters": {},
@@ -56,7 +43,7 @@
   ],
   "events": [],
   "environment": {
-    "SERVERLESS_PROJECT": "smsnotes",
+    "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}"
   },

@@ -5,12 +5,15 @@ import { Router, browserHistory } from 'react-router';
 
 import routes from './routes';
 import configureStore from './state/configureStore';
-import registerPusher from './registerPusher';
+import registerSideEffects from './registerSideEffects';
 
 console.log('Hello client!');
 
+// Redux store creation
 const store = configureStore();
-registerPusher(store);
+
+// Side effects activation
+registerSideEffects(store);
 
 // User interface rendering
 render(
@@ -21,5 +24,5 @@ render(
   () => console.log('App rendered!')
 );
 
-
+// Stylesheets injection
 require('./stylesheets/app.css');

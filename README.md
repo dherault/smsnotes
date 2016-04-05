@@ -20,3 +20,7 @@ Apache-2.0
 
 #### Normalize.css
 - Add 'Roboto' to definition of html.font-family
+
+### Memorable bugs list
+
+- Carriage return from Nexmo: https://forums.aws.amazon.com/thread.jspa?threadID=225001

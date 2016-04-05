@@ -6,7 +6,7 @@
   "customRole": false,
   "handler": "server/lambda_graphql/handler.default",
   "timeout": 6,
-  "memorySize": 1024,
+  "memorySize": 128,
   "authorizer": {},
   "custom": {
     "excludePatterns": [],

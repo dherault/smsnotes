@@ -3,6 +3,7 @@
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
   margin: 1rem auto 0 auto;
   padding: 1rem;
+  white-space: pre;
 }
 
 .note_timestamp {
