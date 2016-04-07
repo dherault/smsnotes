@@ -1,6 +1,17 @@
 # SMSNotes
 
-WIP :)
+Status: unmaintained
+
+Take notes by sending sms!
+
+### Architecture
+
+```
+User sends a SMS --GSM--> Nexmo (virtual number provider) --webhook--> AWS Lambda --> Dynamodb
+                                                                                  |
+                                                                                  --> Pusher --> browser client update
+browser client <--https-- AWS La
+```
 
 ### License
 
@@ -24,3 +35,4 @@ Apache-2.0
 ### Memorable bugs list
 
 - Carriage return from Nexmo: https://forums.aws.amazon.com/thread.jspa?threadID=225001
+- Always use React classes (as opposed to stateless functions) to allow webpack HMR

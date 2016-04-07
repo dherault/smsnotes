@@ -1,4 +1,4 @@
-import { dbClient, tables } from '../../server/shared/dynamodb/main';
+import { dbClient, tables } from '../../src/server/lib/dynamodb/main';
 
 for (let key in tables) {
   dbClient.deleteTable({ TableName: tables[key].TableName }, (err, data) => {

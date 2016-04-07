@@ -31,8 +31,6 @@ module.exports = {
     new webpack.ProvidePlugin({ // http://mts.io/2015/04/08/webpack-shims-polyfills/
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
-    // new webpack.IgnorePlugin(/chalk/),
-    // new webpack.IgnorePlugin(/node-fetch/)
   ],
   module: {
     loaders: [
