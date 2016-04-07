@@ -4,15 +4,6 @@ Status: unmaintained
 
 Take notes by sending sms!
 
-### Architecture
-
-```
-User sends a SMS --GSM--> Nexmo (virtual number provider) --webhook--> AWS Lambda --> Dynamodb
-                                                                                  |
-                                                                                  --> Pusher --> browser client update
-browser client <--https-- AWS La
-```
-
 ### License
 
 Apache-2.0
